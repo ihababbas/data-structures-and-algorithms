@@ -168,21 +168,28 @@ Here is a sample board:
 ------------------------------------------------------------------------------------------------ */
 
 const detectTicTacToeWin = (board) => {
-  let horizontal = board.map(x => {
-    for (let i=0; i<x.length-1; i++) {
-      if (x[i]===x[i+1]&&x[i].length===1) {
-        return false
-      } else {
-        return true
+  for(let i = 0; i < 3; i++) {
+    if(helpCheck(board, i, 0, i, 1, i, 2)) {
+      return true;
+    } else if(helpCheck(board, 0, i, 1, i, 2, i)) {
+      return true;
+    } else if(helpCheck(board, 0, 0, 1, 1, 2, 2)) {
+      return true;
+    } else if(helpCheck(board, 2, 2, 1, 1, 0, 0)) {
+      return true;
+    }
+    return false;
+  }
+
+
+  function helpCheck(board, xVal1, yVal1, xVal2, yVal2, xVal3, yVal3) {
+    if(board[xVal1][yVal1] !== '' && board[xVal2][yVal2] !== '' && board[xVal3][yVal3] !== '') {
+      if(board[xVal1][yVal1] === board[xVal2][yVal2] && board[xVal1][yVal1] === board[xVal3][yVal3]) {
+        return true;
       }
     }
-  }).includes(true)
-  let left = board[0][0].length===1 && board[0][0]===board[1][0] && board[0][0]===board[2][0]
-  let mid = board[0][1].length===1&&board[0][1]===board[1][1]&&board[0][1]===board[2][1]
-  let right = board[0][2].length===1&&board[0][2]===board[1][2]&&board[0][2]===board[2][2]
-  let ans = [horizontal, left, mid, right].includes(true)
-  console.log(horizontal)
-  return ans
+  }
+  return false;
   // Solution code here...
 };
 
